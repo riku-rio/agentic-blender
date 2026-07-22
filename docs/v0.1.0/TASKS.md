@@ -122,41 +122,41 @@ Later phases may begin before all earlier phases are complete when dependencies 
 
 ## 0.2 Repository Bootstrap
 
-- [ ] **REP-001** Initialize the packaged Python project with `uv`.
-- [ ] **REP-002** Configure the `src/agentic_blender/` package layout.
-- [ ] **REP-003** Pin the development Python version to 3.11.
-- [ ] **REP-004** Set `requires-python = ">=3.10"`.
-- [ ] **REP-005** Configure `uv_build` as the build backend.
-- [ ] **REP-006** Add and lock runtime dependencies.
-- [ ] **REP-007** Add and lock development dependencies.
-- [ ] **REP-008** Commit `uv.lock` and `.python-version`.
-- [ ] **REP-009** Add a Windows-appropriate `.gitignore`.
-- [ ] **REP-010** Add the selected open-source license.
-- [ ] **REP-011** Add `CHANGELOG.md` with an unreleased v0.1.0 section.
-- [ ] **REP-012** Add `CONTRIBUTING.md`.
-- [ ] **REP-013** Add root `SECURITY.md` with responsible disclosure guidance.
+- [x] **REP-001** Initialize the packaged Python project with `uv`.
+- [x] **REP-002** Configure the `src/agentic_blender/` package layout.
+- [x] **REP-003** Pin the development Python version to 3.11.
+- [x] **REP-004** Set `requires-python = ">=3.10"`.
+- [x] **REP-005** Configure `uv_build` as the build backend.
+- [x] **REP-006** Add and lock runtime dependencies.
+- [x] **REP-007** Add and lock development dependencies.
+- [x] **REP-008** Commit `uv.lock` and `.python-version`.
+- [x] **REP-009** Add a Windows-appropriate `.gitignore`.
+- [x] **REP-010** Add the selected open-source license.
+- [x] **REP-011** Add `CHANGELOG.md` with an unreleased v0.1.0 section.
+- [x] **REP-012** Add `CONTRIBUTING.md`.
+- [x] **REP-013** Add root `SECURITY.md` with responsible disclosure guidance.
 
 ## 0.3 Tooling and Quality
 
-- [ ] **QLT-001** Configure Ruff formatting.
-- [ ] **QLT-002** Configure Ruff lint rules.
-- [ ] **QLT-003** Configure mypy for the external Python package.
-- [ ] **QLT-004** Define the relaxed or excluded type-checking policy for Blender-specific modules.
-- [ ] **QLT-005** Configure pytest.
-- [ ] **QLT-006** Configure pytest-asyncio.
-- [ ] **QLT-007** Configure pytest-cov.
-- [ ] **QLT-008** Configure pre-commit hooks.
-- [ ] **QLT-009** Add a local quality command documented for contributors.
-- [ ] **QLT-010** Add GitHub Actions CI for supported external Python versions.
-- [ ] **QLT-011** Ensure CI does not pretend to run Blender GUI tests on unsupported runners.
-- [ ] **QLT-012** Add a separate manual or self-hosted workflow strategy for Blender smoke tests.
+- [x] **QLT-001** Configure Ruff formatting.
+- [x] **QLT-002** Configure Ruff lint rules.
+- [x] **QLT-003** Configure mypy for the external Python package.
+- [x] **QLT-004** Define the relaxed or excluded type-checking policy for Blender-specific modules.
+- [x] **QLT-005** Configure pytest.
+- [x] **QLT-006** Configure pytest-asyncio.
+- [x] **QLT-007** Configure pytest-cov.
+- [x] **QLT-008** Configure pre-commit hooks.
+- [x] **QLT-009** Add a local quality command documented for contributors.
+- [x] **QLT-010** Add GitHub Actions CI for supported external Python versions.
+- [x] **QLT-011** Ensure CI does not pretend to run Blender GUI tests on unsupported runners.
+- [x] **QLT-012** Add a separate manual or self-hosted workflow strategy for Blender smoke tests.
 
 ### Phase 0 Exit Criteria
 
-- [ ] All foundational decisions required before implementation are accepted or explicitly marked proposed.
-- [ ] The project installs with `uv sync`.
-- [ ] Formatting, linting, typing, and unit test commands run successfully.
-- [ ] CI runs on a minimal repository commit.
+- [x] All foundational decisions required before implementation are accepted or explicitly marked proposed.
+- [x] The project installs with `uv sync`.
+- [x] Formatting, linting, typing, and unit test commands run successfully.
+- [x] CI runs on a minimal repository commit.
 
 ---
 
