@@ -55,68 +55,68 @@ Later phases may begin before all earlier phases are complete when dependencies 
 
 ## 0.1 Decision Records
 
-- [ ] **DEC-001** Create `docs/v0.1.0/decisions/0001-project-name.md`.
+- [x] **DEC-001** Create `docs/v0.1.0/decisions/0001-project-name.md`.
   - Record the decision to use `agentic-blender`.
   - Record the Python import name `agentic_blender`.
   - Document rejected alternatives including `blender-mcp`.
 
-- [ ] **DEC-002** Create `docs/v0.1.0/decisions/0002-supported-environment.md`.
+- [x] **DEC-002** Create `docs/v0.1.0/decisions/0002-supported-environment.md`.
   - Record Windows 10/11 x64 as the v0.1.0 platform.
   - Record Blender 5.2.0 LTS as the official target.
   - Record Python 3.10+ support and Python 3.11 development target.
 
-- [ ] **DEC-003** Create `docs/v0.1.0/decisions/0003-python-and-uv-toolchain.md`.
+- [x] **DEC-003** Create `docs/v0.1.0/decisions/0003-python-and-uv-toolchain.md`.
   - Record Python as the only implementation language in v0.1.0.
   - Record `uv` and `uv_build` choices.
   - Record why Node.js, TypeScript, Rust, and C++ are excluded.
 
-- [ ] **DEC-004** Create `docs/v0.1.0/decisions/0004-mcp-stdio-transport.md`.
+- [x] **DEC-004** Create `docs/v0.1.0/decisions/0004-mcp-stdio-transport.md`.
   - Record `stdio` as the only MCP transport in v0.1.0.
   - Record the canonical server identity.
   - Record why HTTP, SSE, WebSocket, and TCP MCP transports are excluded.
 
-- [ ] **DEC-005** Create `docs/v0.1.0/decisions/0005-blender-extension-bridge.md`.
+- [x] **DEC-005** Create `docs/v0.1.0/decisions/0005-blender-extension-bridge.md`.
   - Record the external MCP server and in-Blender extension split.
   - Record the Blender main-thread execution requirement.
   - Record zero third-party extension dependencies.
 
-- [ ] **DEC-006** Create `docs/v0.1.0/decisions/0006-file-based-ipc.md`.
+- [x] **DEC-006** Create `docs/v0.1.0/decisions/0006-file-based-ipc.md`.
   - Define why file-based IPC is selected for v0.1.0.
   - Define command, response, heartbeat, and status files.
   - Document future migration possibilities without committing to them.
 
-- [ ] **DEC-007** Create `docs/v0.1.0/decisions/0007-open-blender-reuse-policy.md`.
+- [x] **DEC-007** Create `docs/v0.1.0/decisions/0007-open-blender-reuse-policy.md`.
   - Record reuse of an already-connected Blender instance.
   - Record unsaved-work protection.
   - Record behavior for running but disconnected Blender instances.
   - Record multiple-instance selection policy once finalized.
 
-- [ ] **DEC-008** Create `docs/v0.1.0/decisions/0008-add-primitive-tool.md`.
+- [x] **DEC-008** Create `docs/v0.1.0/decisions/0008-add-primitive-tool.md`.
   - Record one general `add_primitive` tool.
   - Record the supported primitive names and convenience aliases.
   - Record why separate primitive tools are rejected.
 
-- [ ] **DEC-009** Create `docs/v0.1.0/decisions/0009-window-screenshot-strategy.md`.
+- [x] **DEC-009** Create `docs/v0.1.0/decisions/0009-window-screenshot-strategy.md`.
   - Record `pywin32`, `mss`, and Pillow responsibilities.
   - Record full Blender-window capture as the required mode.
   - Record DPI and multi-monitor expectations.
 
-- [ ] **DEC-010** Create `docs/v0.1.0/decisions/0010-export-as-blend-save.md`.
+- [x] **DEC-010** Create `docs/v0.1.0/decisions/0010-export-as-blend-save.md`.
   - Record that the public tool is named `export`.
   - Clarify that Blender implementation uses normal `.blend` project saving.
   - Record overwrite protection and verification behavior.
 
-- [ ] **DEC-011** Create `docs/v0.1.0/decisions/0011-agent-workflow.md`.
+- [x] **DEC-011** Create `docs/v0.1.0/decisions/0011-agent-workflow.md`.
   - Record Plan → Review → Implement → Verify → Export → Report.
   - Record the three-attempt limits.
   - Record programmatic and visual verification responsibilities.
 
-- [ ] **DEC-012** Create `docs/v0.1.0/decisions/0012-generic-skill-distribution.md`.
+- [x] **DEC-012** Create `docs/v0.1.0/decisions/0012-generic-skill-distribution.md`.
   - Record that the project remains agent-agnostic.
   - Record distribution of one generic `SKILL.md`.
   - Record absence of product-specific agent metadata in v0.1.0.
 
-- [ ] **DEC-013** Create `docs/v0.1.0/decisions/0013-license.md`.
+- [x] **DEC-013** Create `docs/v0.1.0/decisions/0013-license.md`.
   - Confirm the project license.
   - Document compatibility considerations for the Blender extension.
 
