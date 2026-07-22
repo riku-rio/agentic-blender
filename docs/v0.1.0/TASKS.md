@@ -164,9 +164,9 @@ Later phases may begin before all earlier phases are complete when dependencies 
 
 ## 1.1 Package Structure
 
-- [ ] **CORE-001** Create `src/agentic_blender/__init__.py`.
-- [ ] **CORE-002** Add a central version constant or package metadata lookup.
-- [ ] **CORE-003** Create packages for:
+- [x] **CORE-001** Create `src/agentic_blender/__init__.py`.
+- [x] **CORE-002** Add a central version constant or package metadata lookup.
+- [x] **CORE-003** Create packages for:
   - `models/`
   - `ipc/`
   - `blender/`
@@ -178,52 +178,52 @@ Later phases may begin before all earlier phases are complete when dependencies 
 
 ## 1.2 Configuration
 
-- [ ] **CFG-001** Define the application configuration model with Pydantic.
-- [ ] **CFG-002** Define configuration precedence:
+- [x] **CFG-001** Define the application configuration model with Pydantic.
+- [x] **CFG-002** Define configuration precedence:
   - CLI arguments.
   - Environment variables.
   - Configuration file.
   - Defaults.
-- [ ] **CFG-003** Define Blender installation configuration.
-- [ ] **CFG-004** Define timeout configuration.
-- [ ] **CFG-005** Define screenshot defaults.
-- [ ] **CFG-006** Define extension UI preferences where externally configurable.
-- [ ] **CFG-007** Define safe config serialization and loading.
-- [ ] **CFG-008** Handle malformed configuration with a stable error.
-- [ ] **CFG-009** Prevent secrets from being persisted in long-lived configuration.
+- [x] **CFG-003** Define Blender installation configuration.
+- [x] **CFG-004** Define timeout configuration.
+- [x] **CFG-005** Define screenshot defaults.
+- [x] **CFG-006** Define extension UI preferences where externally configurable.
+- [x] **CFG-007** Define safe config serialization and loading.
+- [x] **CFG-008** Handle malformed configuration with a stable error.
+- [x] **CFG-009** Prevent secrets from being persisted in long-lived configuration.
 
 ## 1.3 Application Paths
 
-- [ ] **PATH-001** Use `platformdirs` for config, data, cache, and log roots.
-- [ ] **PATH-002** Define runtime and session directory layout.
-- [ ] **PATH-003** Define extension bundle staging path.
-- [ ] **PATH-004** Implement directory creation with actionable errors.
-- [ ] **PATH-005** Validate writable runtime and log locations.
-- [ ] **PATH-006** Implement safe path normalization for Windows.
-- [ ] **PATH-007** Support spaces and non-ASCII characters in user paths.
-- [ ] **PATH-008** Add unit tests for path resolution and creation.
+- [x] **PATH-001** Use `platformdirs` for config, data, cache, and log roots.
+- [x] **PATH-002** Define runtime and session directory layout.
+- [x] **PATH-003** Define extension bundle staging path.
+- [x] **PATH-004** Implement directory creation with actionable errors.
+- [x] **PATH-005** Validate writable runtime and log locations.
+- [x] **PATH-006** Implement safe path normalization for Windows.
+- [x] **PATH-007** Support spaces and non-ASCII characters in user paths.
+- [x] **PATH-008** Add unit tests for path resolution and creation.
 
 ## 1.4 Shared Models
 
-- [ ] **MOD-001** Define `Vector3` and transform models.
-- [ ] **MOD-002** Define Blender version and support-state models.
-- [ ] **MOD-003** Define Blender process and window identity models.
-- [ ] **MOD-004** Define session metadata models.
-- [ ] **MOD-005** Define heartbeat models.
-- [ ] **MOD-006** Define workflow status models.
-- [ ] **MOD-007** Define command envelope models.
-- [ ] **MOD-008** Define response envelope models.
-- [ ] **MOD-009** Define structured error models.
-- [ ] **MOD-010** Define scene summary and object summary models.
-- [ ] **MOD-011** Define screenshot result models.
-- [ ] **MOD-012** Define export result models.
-- [ ] **MOD-013** Add serialization round-trip tests for all IPC models.
-- [ ] **MOD-014** Reject unknown or unsupported command types.
+- [x] **MOD-001** Define `Vector3` and transform models.
+- [x] **MOD-002** Define Blender version and support-state models.
+- [x] **MOD-003** Define Blender process and window identity models.
+- [x] **MOD-004** Define session metadata models.
+- [x] **MOD-005** Define heartbeat models.
+- [x] **MOD-006** Define workflow status models.
+- [x] **MOD-007** Define command envelope models.
+- [x] **MOD-008** Define response envelope models.
+- [x] **MOD-009** Define structured error models.
+- [x] **MOD-010** Define scene summary and object summary models.
+- [x] **MOD-011** Define screenshot result models.
+- [x] **MOD-012** Define export result models.
+- [x] **MOD-013** Add serialization round-trip tests for all IPC models.
+- [x] **MOD-014** Reject unknown or unsupported command types.
 
 ## 1.5 Error System
 
-- [ ] **ERR-001** Create a central error-code enumeration.
-- [ ] **ERR-002** Implement at least these codes:
+- [x] **ERR-001** Create a central error-code enumeration.
+- [x] **ERR-002** Implement at least these codes:
   - `BLENDER_NOT_FOUND`
   - `BLENDER_UNSUPPORTED_VERSION`
   - `BLENDER_NOT_CONNECTED`
@@ -238,16 +238,16 @@ Later phases may begin before all earlier phases are complete when dependencies 
   - `EXPORT_FAILED`
   - `COMMAND_TIMEOUT`
   - `INVALID_SESSION`
-- [ ] **ERR-003** Define human-readable messages and suggested actions.
-- [ ] **ERR-004** Ensure exceptions are converted to structured failures at boundaries.
-- [ ] **ERR-005** Add tests for stable error serialization.
+- [x] **ERR-003** Define human-readable messages and suggested actions.
+- [x] **ERR-004** Ensure exceptions are converted to structured failures at boundaries.
+- [x] **ERR-005** Add tests for stable error serialization.
 
 ### Phase 1 Exit Criteria
 
-- [ ] Configuration loads and validates.
-- [ ] Runtime paths are created safely.
-- [ ] Shared models round-trip through JSON.
-- [ ] Stable errors are available to CLI, MCP, and IPC layers.
+- [x] Configuration loads and validates.
+- [x] Runtime paths are created safely.
+- [x] Shared models round-trip through JSON.
+- [x] Stable errors are available to CLI, MCP, and IPC layers.
 
 ---
 
