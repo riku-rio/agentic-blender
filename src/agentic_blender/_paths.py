@@ -123,16 +123,6 @@ def _create_directory(path: Path) -> None:
             },
         ) from exc
 
-    if not path.is_dir():
-        raise AppError(
-            ErrorCode.RUNTIME_PATH_ERROR,
-            context={
-                "path": str(path),
-                "operation": "validate_directory",
-                "reason": "Path exists but is not a directory.",
-            },
-        )
-
 
 def _verify_writable(path: Path) -> None:
     """Test actual file creation and deletion inside a directory."""

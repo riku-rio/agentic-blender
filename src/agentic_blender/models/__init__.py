@@ -1,5 +1,6 @@
 """Shared models for configuration, IPC, sessions, scenes, and tool results."""
 
+from agentic_blender.models.base import FrozenModel, utc_now
 from agentic_blender.models.blender_version import (
     BlenderSupportState,
     BlenderVersion,
@@ -34,6 +35,7 @@ __all__ = [
     "ErrorCode",
     "ErrorDetail",
     "ExportResult",
+    "FrozenModel",
     "HeartbeatPayload",
     "ObjectSummary",
     "ResponseEnvelope",
@@ -48,4 +50,5 @@ __all__ = [
     "WorkflowState",
     "WorkflowStatus",
     "classify_blender_version",
+    "utc_now",
 ]

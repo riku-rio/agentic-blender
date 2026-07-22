@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 import enum
+from typing import Final
 
 from pydantic import AwareDatetime, Field, NonNegativeInt, PositiveInt, model_validator
 
 from agentic_blender.models.base import FrozenModel, utc_now
+
+DEFAULT_MAX_ATTEMPTS: Final[int] = 3
+"""Policy default for workflow retry limit; also used by WorkflowConfig."""
 
 
 class WorkflowState(str, enum.Enum):
@@ -35,7 +39,7 @@ class WorkflowStatus(FrozenModel):
     task_summary: str | None = Field(default=None, max_length=500)
     current_step: str | None = Field(default=None, max_length=500)
     attempt: NonNegativeInt = 0
-    max_attempts: PositiveInt = 3
+    max_attempts: PositiveInt = DEFAULT_MAX_ATTEMPTS
     last_action: str | None = Field(default=None, max_length=500)
     failure_reason: str | None = Field(default=None, max_length=2000)
     updated_at: AwareDatetime = Field(default_factory=utc_now)

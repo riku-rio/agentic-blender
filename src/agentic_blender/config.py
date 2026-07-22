@@ -27,6 +27,7 @@ else:
 from agentic_blender._paths import config_file, normalize_path
 from agentic_blender.models.base import FrozenModel
 from agentic_blender.models.errors import AppError, ErrorCode
+from agentic_blender.models.workflow import DEFAULT_MAX_ATTEMPTS
 
 if TYPE_CHECKING:
     from collections.abc import Mapping
@@ -63,6 +64,12 @@ class ScreenshotConfig(FrozenModel):
     output_dir: Path | None = None
 
 
+class WorkflowConfig(FrozenModel):
+    """Workflow retry policy."""
+
+    max_attempts: int = DEFAULT_MAX_ATTEMPTS
+
+
 class ExtensionUIConfig(FrozenModel):
     """Externally configurable Blender extension UI preferences."""
 
@@ -84,6 +91,7 @@ class AppConfig(BaseSettings):
     blender: BlenderConfig = Field(default_factory=BlenderConfig)
     timeouts: TimeoutConfig = Field(default_factory=TimeoutConfig)
     screenshot: ScreenshotConfig = Field(default_factory=ScreenshotConfig)
+    workflow: WorkflowConfig = Field(default_factory=WorkflowConfig)
     extension_ui: ExtensionUIConfig = Field(default_factory=ExtensionUIConfig)
     log_level: LogLevel = LogLevel.INFO
 
@@ -196,7 +204,7 @@ def save_config(
         temporary_path = None
         return target
 
-    except (OSError, TypeError, ValueError) as exc:
+    except (OSError, ValueError) as exc:
         if temporary_path is not None:
             temporary_path.unlink(missing_ok=True)
 
