@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Python ${{ matrix.python-version }}
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Install Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install locked dependencies
+        run: uv sync --frozen --python ${{ matrix.python-version }}
+
+      - name: Check formatting
+        run: uv run --frozen ruff format --check .
+
+      - name: Lint
+        run: uv run --frozen ruff check .
+
+      - name: Type-check
+        run: uv run --frozen mypy src/agentic_blender/
+
+      - name: Test unit and integration suites
+        run: uv run --frozen pytest tests/ -m "unit or integration"
+
+      - name: Run pre-commit hooks
+        if: matrix.python-version == '3.11'
+        run: uv run --frozen pre-commit run --all-files
+
+      - name: Build distributions
+        if: matrix.python-version == '3.11'
+        run: uv build
