@@ -1,0 +1,126 @@
+[project]
+name = "agentic-blender"
+version = "0.1.0"
+description = "Agent-agnostic MCP server and Blender extension."
+readme = "README.md"
+authors = [
+    { name = "riku-rio", email = "YosefBesn123@gmail.com" }
+]
+requires-python = ">=3.10"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+dependencies = [
+    "filelock>=3.13,<4",
+    "mcp[cli]>=1.28.1,<2",
+    "mss>=9,<11",
+    "pillow>=10.3,<13",
+    "platformdirs>=4,<5",
+    "psutil>=6,<8",
+    "pydantic>=2,<3",
+    "pydantic-settings>=2,<3",
+    "pywin32>=306 ; sys_platform == 'win32'",
+    "rich>=13,<15",
+    "typer>=0.12,<1",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.30,<0.12"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+  "E",    # pycodestyle errors
+  "W",    # pycodestyle warnings
+  "F",    # Pyflakes
+  "I",    # import sorting
+  "N",    # naming
+  "UP",   # Python upgrades
+  "B",    # bugbear
+  "C4",   # comprehensions
+  "SIM",  # simplifications
+  "TCH",  # type-checking imports
+  "ANN",  # annotations
+  "D",    # docstrings
+]
+ignore = [
+  "D100", # public module docstring
+  "D104", # public package docstring
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = ["agentic_blender"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["D"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+disallow_any_generics = true
+show_error_codes = true
+pretty = true
+
+# Blender extension modules run inside Blender's embedded Python environment.
+# They are excluded from external-environment mypy checks.
+exclude = [
+  "^src/agentic_blender/resources/extension/",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = [
+  "--strict-markers",
+  "--tb=short",
+  "--cov=agentic_blender",
+  "--cov-report=term-missing",
+  "--cov-report=xml:coverage.xml",
+  "--cov-fail-under=70",
+]
+markers = [
+  "unit: fast isolated unit tests without Blender",
+  "integration: tests using the filesystem or a fake IPC bridge",
+  "blender: tests requiring a supported Blender installation",
+]
+
+[[tool.mypy.overrides]]
+module = [
+  "mss.*",
+  "win32api",
+  "win32con",
+  "win32gui",
+  "win32process",
+  "pywintypes",
+]
+ignore_missing_imports = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3,<3",
+    "pre-commit>=4.6,<5",
+    "pytest>=9.1,<10",
+    "pytest-asyncio>=1.4,<2",
+    "pytest-cov>=7.1,<8",
+    "ruff>=0.15,<0.16",
+    "types-psutil>=7.2.2.20260518",
+]
