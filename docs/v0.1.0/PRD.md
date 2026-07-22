@@ -6,15 +6,15 @@
 - **Status:** Draft
 - **Date:** 2026-07-22
 - **Target platform:** Windows 10/11 x64
-- **Target Blender version:** Blender 4.5 LTS
+- **Official Blender version:** Blender 5.2.0 LTS
 
 ## 1. Product Summary
 
-Agentic Blender is an agent-agnostic Model Context Protocol server and Blender extension that allow AI agents to control a visible Blender application through a structured, inspectable, and verifiable workflow.
+Agentic Blender is an agent-agnostic Model Context Protocol server and Blender extension that allow AI agents to control a visible Blender application through a structured, inspectable, safe, and verifiable workflow.
 
-The first release establishes the complete product foundation rather than a temporary demonstration. The end-to-end acceptance scenario is intentionally small: remove Blender's default cube, add a sphere, verify the result, capture a screenshot, and save a valid Blender project.
+The first release establishes the complete product foundation rather than a temporary demonstration. Its primary end-to-end scenario is intentionally small: create a clean Blender project, remove the default cube, add a sphere, verify the result, capture a screenshot, and save a valid Blender project.
 
-The small modeling task must exercise the full system:
+The scenario must exercise the full system:
 
 ```text
 Install
@@ -33,17 +33,17 @@ Install
 
 ## 2. Problem Statement
 
-AI coding agents can call MCP tools, but Blender automation presents additional constraints:
+AI coding agents can call MCP tools, but Blender automation introduces constraints that ordinary code-editing workflows do not solve:
 
-- Blender operations must run inside Blender's embedded Python environment.
+- Blender operations must execute inside Blender's embedded Python environment.
 - The user should be able to watch the agent work in the normal Blender GUI.
-- An already-open Blender instance should be reused instead of launching duplicate applications.
+- An already-open Blender instance should be reused instead of launching duplicates.
 - Existing unsaved user work must not be destroyed.
-- A successful tool response does not prove that the visual result is correct.
-- Agents need a repeatable workflow for planning, implementation, verification, retries, and export.
+- A successful command does not prove that the visual result is correct.
+- Agents need a repeatable workflow for planning, implementation, verification, retries, export, and reporting.
 - Installation and configuration must not depend on one specific agent product.
 
-Agentic Blender v0.1.0 addresses these constraints with a local MCP server, a Blender extension, a visible workflow status UI, structured Blender tools, programmatic scene inspection, screenshot capture, visual review instructions, and safe project export.
+Agentic Blender v0.1.0 addresses these constraints with a local MCP server, a Blender extension, visible workflow status, typed Blender tools, programmatic scene inspection, application screenshot capture, visual review instructions, and safe project export.
 
 ## 3. Product Principles
 
@@ -80,6 +80,7 @@ In v0.1.0:
 - Modeling operations must be allowlisted and typed.
 - The MCP server must communicate only with a locally installed Blender extension.
 - Session communication must use per-session authentication data.
+- Existing artifacts must not be overwritten by default.
 
 ### 3.4 Verifiable
 
@@ -90,12 +91,12 @@ The workflow must support:
 - Programmatic scene inspection.
 - Screenshot capture of the Blender application.
 - Visual review by an agent or sub-agent.
-- A maximum retry count to prevent infinite loops.
-- Verification that exported artifacts exist and are valid enough to reopen.
+- Bounded retry counts to prevent infinite loops.
+- Verification that generated artifacts exist and are usable.
 
 ### 3.5 Small but Extensible
 
-v0.1.0 must solve one small modeling scenario completely while establishing foundations that can support the v0.2.x 3D house workflow.
+v0.1.0 must solve one small modeling scenario completely while establishing foundations for the v0.2.x 3D house workflow.
 
 ## 4. Goals
 
@@ -144,12 +145,12 @@ The following are explicitly out of scope for v0.1.0:
 - Materials and textures.
 - Lighting configuration.
 - Camera configuration.
-- Rendering a production image.
+- Production rendering.
 - Geometry Nodes.
 - Animation.
 - Sculpting.
 - Arbitrary Python execution.
-- Remote Blender control over the network.
+- Remote Blender control over a network.
 - HTTP, SSE, WebSocket, or TCP MCP transports.
 - macOS support.
 - Linux support.
@@ -160,19 +161,42 @@ The following are explicitly out of scope for v0.1.0:
 
 These capabilities may be considered in later releases.
 
-## 6. Target Users
+## 6. Supported Environment
 
-### 6.1 Primary User
+### 6.1 Official Environment
+
+v0.1.0 officially supports:
+
+```text
+Operating system: Windows 10/11 x64
+Blender: 5.2.0 LTS
+External Python: 3.10 or newer
+Development Python: 3.11
+Package manager: uv
+MCP transport: stdio
+```
+
+### 6.2 Blender Version Policy
+
+- Blender `5.2.0 LTS` is the official development, test, and support target for v0.1.0.
+- Later Blender `5.2.x LTS` patch releases may be accepted after the smoke test passes.
+- Blender versions newer than the tested 5.2 LTS line must be reported as unverified or experimental until tested.
+- Blender versions older than 5.2.0 are unsupported in v0.1.0.
+- `agentic-blender doctor` must report the detected Blender version and its support state.
+
+## 7. Target Users
+
+### 7.1 Primary User
 
 A developer or technical creator who uses an MCP-capable AI agent and wants the agent to operate Blender locally while the work remains visible and reviewable.
 
-### 6.2 Secondary User
+### 7.2 Secondary User
 
 A contributor developing new Agentic Blender tools, extension capabilities, workflow rules, or platform support.
 
-## 7. Primary User Journey
+## 8. Primary User Journey
 
-### 7.1 Installation and Initialization
+### 8.1 Installation and Initialization
 
 1. The user installs Agentic Blender using `uv` tooling.
 2. The user runs:
@@ -190,12 +214,12 @@ A contributor developing new Agentic Blender tools, extension capabilities, work
 9. The CLI explains how to obtain and install the bundled `SKILL.md`.
 10. The CLI runs or recommends `agentic-blender doctor`.
 
-### 7.2 Agent Execution
+### 8.2 Agent Execution
 
 1. The agent invokes `open_blender`.
-2. Agentic Blender opens Blender or reuses the connected instance.
-3. A clean default project becomes active, unless unsaved changes block the operation.
-4. The Blender extension displays the active agent task and workflow status.
+2. Agentic Blender opens Blender or reuses a connected instance.
+3. A clean default project becomes active unless unsaved changes block the operation.
+4. The Blender extension displays the active task and workflow status.
 5. The agent creates a plan with testable acceptance criteria.
 6. A reviewer sub-agent evaluates the plan.
 7. The agent revises the plan when required, up to three total plan attempts.
@@ -208,13 +232,13 @@ A contributor developing new Agentic Blender tools, extension capabilities, work
 14. The agent calls `export`.
 15. The agent provides a final report with status, actions, verification results, attempts, and artifact paths.
 
-## 8. Functional Requirements
+## 9. Functional Requirements
 
-## 8.1 CLI Requirements
+## 9.1 CLI Requirements
 
 ### CLI-001 — Primary Command
 
-The installed application must provide the command:
+The installed application must provide:
 
 ```text
 agentic-blender
@@ -230,7 +254,7 @@ agentic-blender init
 
 `init` must:
 
-- Detect supported Blender installations.
+- Detect Blender 5.2.0 LTS and compatible tested 5.2 LTS patch releases.
 - Allow target selection when necessary.
 - Install the bundled Blender extension.
 - Enable the extension.
@@ -254,7 +278,7 @@ agentic-blender doctor
 - Supported Python runtime.
 - Agentic Blender installation.
 - Blender executable discovery.
-- Blender version compatibility.
+- Exact Blender version and support state.
 - Extension installation.
 - Extension enablement.
 - Runtime directory access.
@@ -276,6 +300,7 @@ agentic-blender status
 The command must report:
 
 - Configured Blender installation.
+- Detected Blender version.
 - Whether Blender is running.
 - Whether the extension is connected.
 - Active session information, if any.
@@ -313,7 +338,7 @@ Help must explain:
 - The expected agent workflow.
 - Diagnostic and uninstall commands.
 
-The help system may provide focused topics such as:
+Focused help topics may include:
 
 ```powershell
 agentic-blender help setup
@@ -344,7 +369,7 @@ agentic-blender uninstall
 
 The command must support removing the Blender extension and Agentic Blender-managed runtime files without deleting unrelated Blender projects or user content.
 
-## 8.2 Blender Extension Requirements
+## 9.2 Blender Extension Requirements
 
 ### EXT-001 — Installation
 
@@ -354,17 +379,21 @@ The extension must be bundled with the Agentic Blender Python package and instal
 
 The extension must run using Blender-provided modules and the Python standard library only.
 
-### EXT-003 — Bridge Registration
+### EXT-003 — Blender Compatibility
+
+The extension manifest and implementation must target Blender 5.2.0 LTS.
+
+### EXT-004 — Bridge Registration
 
 When enabled, the extension must register the running Blender instance with Agentic Blender and maintain a heartbeat while Blender remains available.
 
-### EXT-004 — Main-Thread Execution
+### EXT-005 — Main-Thread Execution
 
 All Blender API operations must execute through a Blender-safe main-thread mechanism.
 
 Long-running background threads must not call `bpy` directly.
 
-### EXT-005 — Workflow Panel
+### EXT-006 — Workflow Panel
 
 The extension must expose an `Agentic Blender` panel in the 3D Viewport sidebar.
 
@@ -379,15 +408,15 @@ The panel must display, when available:
 - Last completed action.
 - Failure reason.
 
-### EXT-006 — Viewport Banner
+### EXT-007 — Viewport Banner
 
 The extension must support a lightweight viewport banner showing that the agent is working and the current step.
 
 The banner must be user-configurable and must not permanently obstruct normal Blender usage.
 
-### EXT-007 — Workflow States
+### EXT-008 — Workflow States
 
-The extension and runtime must support displaying at least these states:
+The extension and runtime must support displaying at least:
 
 ```text
 READY
@@ -406,17 +435,17 @@ DISCONNECTED
 
 The mechanism used to update workflow states must remain agent-agnostic.
 
-### EXT-008 — Reconnection
+### EXT-009 — Reconnection
 
 The extension must recover from MCP server restarts or stale sessions without requiring Blender to be reinstalled.
 
-### EXT-009 — Safe Error Handling
+### EXT-010 — Safe Error Handling
 
-Extension errors must be written to Agentic Blender logs and returned as structured failures when they are related to an active command.
+Extension errors must be written to Agentic Blender logs and returned as structured failures when related to an active command.
 
 An extension error must not silently report success.
 
-## 8.3 MCP Server Requirements
+## 9.3 MCP Server Requirements
 
 ### MCP-001 — Transport
 
@@ -454,7 +483,7 @@ Tool failures must include:
 - A stable error code.
 - A human-readable message.
 - Relevant context.
-- A suggested action when one is available.
+- A suggested action when available.
 
 ### MCP-005 — Local Operation
 
@@ -466,13 +495,13 @@ Each active run must use a unique session identifier and unpredictable session a
 
 ### MCP-007 — Timeouts
 
-Commands must have bounded timeouts and must fail clearly when Blender is unresponsive, disconnected, or unable to complete an operation.
+Commands must have bounded timeouts and fail clearly when Blender is unresponsive, disconnected, or unable to complete an operation.
 
 ### MCP-008 — No Arbitrary Code Tool
 
 The MCP server must not expose a tool that executes arbitrary Python code inside or outside Blender.
 
-## 8.4 MCP Tool Requirements
+## 9.4 MCP Tool Requirements
 
 v0.1.0 must expose these user-facing tools:
 
@@ -485,7 +514,7 @@ screenshot
 export
 ```
 
-Internal protocol operations do not need to be exposed as user-facing modeling tools.
+Internal protocol operations do not need to be exposed as user-facing tools.
 
 ### TOOL-001 — `open_blender`
 
@@ -493,14 +522,14 @@ Purpose: make a clean, connected Blender project ready for agent work.
 
 Required behavior:
 
-- If Blender is not running, launch it as a visible desktop application.
+- If Blender is not running, launch Blender 5.2.0 LTS as a visible desktop application.
 - Do not use Blender background mode for the primary workflow.
 - If a connected Blender instance is already running, reuse it.
-- Do not launch a duplicate Blender instance merely because the tool was called again.
+- Do not launch a duplicate instance merely because the tool was called again.
 - Create a new default project in the reused or newly launched instance.
 - Focus or restore the Blender window when practical.
 - Wait for a valid extension handshake before reporting readiness.
-- Return process, session, connection, reuse, project, and scene summary information.
+- Return process, version, session, connection, reuse, project, and scene summary information.
 
 Unsaved work behavior:
 
@@ -513,7 +542,7 @@ Unsaved work behavior:
 Disconnected instance behavior:
 
 - If Blender is running but no usable Agentic Blender extension connection exists, do not silently control it.
-- Do not automatically launch a second instance unless a future explicit policy allows it.
+- Do not automatically launch a second instance.
 - Return a stable `BLENDER_NOT_CONNECTED` error with remediation guidance.
 
 ### TOOL-002 — `delete_object`
@@ -581,7 +610,7 @@ Purpose: provide machine-verifiable information about the current Blender scene.
 
 The result must include at least:
 
-- All relevant object names.
+- Relevant object names.
 - Object types.
 - Object transforms.
 - Object dimensions when available.
@@ -589,6 +618,7 @@ The result must include at least:
 - Mesh count.
 - Current project path.
 - Unsaved-change state.
+- Blender version.
 
 For the v0.1.0 acceptance scenario, the response must allow the agent to verify that:
 
@@ -637,11 +667,11 @@ Required behavior:
 - Refuse accidental overwrite by default.
 - Save using Blender's normal project-saving behavior.
 - Verify that the resulting file exists and has non-zero size.
-- Return the final path, size, scene summary, and verification status.
+- Return the final path, size, scene summary, Blender version, and verification status.
 
-The exported file must be reopenable in the supported Blender version.
+The exported file must be reopenable in Blender 5.2.0 LTS.
 
-## 8.5 Agent Workflow Requirements
+## 9.5 Agent Workflow Requirements
 
 ### WF-001 — Open First
 
@@ -766,7 +796,7 @@ The final report must include:
 - Final scene summary.
 - Any warnings, limitations, or unresolved failures.
 
-## 9. Non-Functional Requirements
+## 10. Non-Functional Requirements
 
 ### NFR-001 — Supported Runtime
 
@@ -780,7 +810,7 @@ The project must use `uv` for Python version management, dependency management, 
 
 ### NFR-003 — Blender Compatibility
 
-v0.1.0 officially supports Blender 4.5 LTS on Windows 10/11 x64.
+v0.1.0 officially supports Blender 5.2.0 LTS on Windows 10/11 x64.
 
 Other Blender versions or operating systems must not be advertised as supported until tested and documented.
 
@@ -789,6 +819,7 @@ Other Blender versions or operating systems must not be advertised as supported 
 The system must handle:
 
 - Blender startup timeout.
+- Unsupported Blender version.
 - Extension connection timeout.
 - Stale heartbeat.
 - Blender process termination.
@@ -803,7 +834,7 @@ The system must handle:
 The product must create local logs sufficient to diagnose:
 
 - CLI initialization.
-- Blender discovery.
+- Blender discovery and version selection.
 - Extension installation.
 - Session creation.
 - Command dispatch.
@@ -860,7 +891,7 @@ The release must include:
 - CLI tests where practical.
 - Windows screenshot tests where practical.
 - Blender extension tests or scripted smoke tests.
-- A complete end-to-end sphere workflow smoke test.
+- A complete end-to-end sphere workflow smoke test on Blender 5.2.0 LTS.
 
 ### NFR-009 — No Hidden Destructive Behavior
 
@@ -877,11 +908,11 @@ Reasonable local targets are:
 - CLI commands must not wait indefinitely.
 - Screenshot and export operations must provide bounded timeouts.
 
-Exact performance thresholds may be refined during implementation and recorded in decision or test documentation.
+Exact thresholds may be refined during implementation and recorded in decision or test documentation.
 
-## 10. Data and Artifact Requirements
+## 11. Data and Artifact Requirements
 
-### 10.1 Configuration
+### 11.1 Configuration
 
 Configuration must support at least:
 
@@ -894,13 +925,14 @@ Configuration must support at least:
 - Timeout defaults.
 - Extension UI preferences where appropriate.
 
-### 10.2 Session Data
+### 11.2 Session Data
 
 Each session must have isolated runtime data for:
 
 - Session identity.
 - Authentication token or equivalent secret.
 - Blender process identity.
+- Blender version.
 - Heartbeat.
 - Workflow status.
 - Commands.
@@ -908,7 +940,7 @@ Each session must have isolated runtime data for:
 - Timestamps.
 - Failure details.
 
-### 10.3 Generated Artifacts
+### 11.3 Generated Artifacts
 
 The primary v0.1.0 workflow generates:
 
@@ -918,7 +950,7 @@ The primary v0.1.0 workflow generates:
 
 User-selected screenshot and project output paths must be respected.
 
-## 11. Security Requirements
+## 12. Security Requirements
 
 ### SEC-001 — Local-Only Control
 
@@ -946,7 +978,7 @@ The product must not provide arbitrary shell, Python, or Blender script executio
 
 Unsaved Blender projects and unrelated files must not be deleted or overwritten without explicit user authorization.
 
-## 12. UX Requirements
+## 13. UX Requirements
 
 ### UX-001 — Clear Setup Feedback
 
@@ -972,9 +1004,9 @@ The extension panel and viewport banner must not prevent normal user interaction
 
 Tool responses and final reports must provide absolute artifact paths.
 
-## 13. Acceptance Scenario
+## 14. Acceptance Scenario
 
-The primary acceptance test begins with Agentic Blender installed and Blender 4.5 LTS available.
+The primary acceptance test begins with Agentic Blender installed and Blender 5.2.0 LTS available.
 
 ### User Request
 
@@ -984,36 +1016,37 @@ Remove the default cube and replace it with a sphere. Save a screenshot and the 
 
 ### Required Result
 
-1. `agentic-blender init` successfully installs and enables the extension.
-2. `agentic-blender doctor` reports a usable installation.
-3. The agent can start the MCP server through the documented generic configuration.
+1. `agentic-blender init` detects Blender 5.2.0 LTS and successfully installs and enables the extension.
+2. `agentic-blender doctor` reports a supported and usable installation.
+3. The agent starts the MCP server through the documented generic configuration.
 4. `open_blender` opens a visible Blender instance or reuses the connected instance.
 5. A clean default project becomes active.
 6. The extension shows that the agent is working.
-7. The plan review passes within three attempts.
+7. Plan review passes within three attempts.
 8. `Cube` is deleted.
 9. A mesh object named `Sphere` is added at the expected location.
 10. `inspect_scene` confirms the required state.
 11. `screenshot` creates a readable PNG of the Blender application.
 12. Visual review passes within three attempts.
 13. `export` creates a non-empty `.blend` file.
-14. The `.blend` file reopens successfully in Blender 4.5 LTS.
+14. The `.blend` file reopens successfully in Blender 5.2.0 LTS.
 15. The final report includes verification results and artifact paths.
 
-## 14. Release Criteria
+## 15. Release Criteria
 
 v0.1.0 is ready for release only when all of the following are true:
 
 - All required CLI commands exist and have usable help output.
-- Extension installation through `init` works on a clean supported Windows environment.
+- Extension installation through `init` works on a clean Windows environment with Blender 5.2.0 LTS.
+- `doctor` correctly recognizes Blender 5.2.0 LTS as supported.
 - The extension shows connection and workflow status.
 - An already-open connected Blender instance is reused.
 - Unsaved changes are protected by default.
 - All six required MCP tools are implemented.
 - Tool inputs and outputs are structured and validated.
 - Common failures return stable error codes.
-- The complete acceptance scenario passes.
-- The exported `.blend` file reopens successfully.
+- The complete acceptance scenario passes on Blender 5.2.0 LTS.
+- The exported `.blend` file reopens successfully in Blender 5.2.0 LTS.
 - The screenshot correctly represents the active Blender window.
 - The generic `SKILL.md` contains the bounded review workflow.
 - `doctor` identifies common setup failures.
@@ -1023,20 +1056,20 @@ v0.1.0 is ready for release only when all of the following are true:
 - `docs/v0.1.0/TASKS.md` reflects completed release work.
 - All accepted v0.1.0 engineering decisions are recorded in `docs/v0.1.0/decisions/`.
 
-## 15. Success Metrics
+## 16. Success Metrics
 
 Because v0.1.0 is a foundation release, success is measured by reliability rather than adoption volume.
 
 Initial success metrics are:
 
-- The full sphere workflow completes successfully on a clean supported environment.
+- The full sphere workflow completes successfully on Blender 5.2.0 LTS.
 - Repeated `open_blender` calls do not create unintended duplicate Blender instances.
 - Unsaved user work is never silently discarded in tests.
 - The workflow cannot enter an unbounded plan or visual review loop.
 - Every successful run produces both a screenshot and a reopenable `.blend` file.
 - Common setup failures can be diagnosed through `agentic-blender doctor` without manually inspecting source code.
 
-## 16. Future Direction
+## 17. Future Direction
 
 The v0.2.x release line will build on the v0.1.0 foundation and expand the modeling toolset for a simple 3D house workflow.
 
@@ -1053,13 +1086,13 @@ Potential v0.2.x areas include:
 
 These items are not commitments for v0.1.0 and must be specified in the relevant future PRD.
 
-## 17. Open Implementation Questions
+## 18. Open Implementation Questions
 
 The following details must be resolved through v0.1.0 decision records before implementation is considered stable:
 
 - Exact IPC message schema and atomic file lifecycle.
 - Exact mechanism for publishing planning and review workflow states to the extension without coupling to one agent product.
-- Exact extension packaging and enabling procedure for Blender 4.5 LTS.
+- Exact extension packaging and enabling procedure for Blender 5.2.0 LTS.
 - Exact Blender instance selection policy when multiple connected instances exist.
 - Exact timeout and heartbeat intervals.
 - Exact screenshot behavior for minimized, obscured, DPI-scaled, and multi-monitor windows.
